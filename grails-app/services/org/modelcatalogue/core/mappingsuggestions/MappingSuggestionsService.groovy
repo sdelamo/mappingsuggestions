@@ -122,7 +122,7 @@ class MappingSuggestionsService implements MappingsSuggestionsGateway, WarnGormE
     }
 
     float distanceBetweenDataElements(DataElement source, DataElement destination) {
-        StringMetric metric = StringMetrics.cosineSimilarity()
+        StringMetric metric = StringMetrics.levenshtein()
         float result = metric.compare(source.name, destination.name)
         result
     }
