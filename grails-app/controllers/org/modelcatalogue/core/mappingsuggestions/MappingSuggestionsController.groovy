@@ -46,11 +46,21 @@ class MappingSuggestionsController implements GrailsConfigurationAware {
     }
 
     def reject(MappingSuggestionRejectCommand cmd) {
+        if ( cmd.hasErrors() ) {
+            redirect action: 'index', params: [batchId: cmd.batchId]
+            return
+        }
+
         mappingsSuggestionsGateway.reject(cmd.mappingSuggestionIds)
         redirect action: 'index', params: [batchId: cmd.batchId]
     }
 
     def approve(MappingSuggestionApproveCommand cmd) {
+        if ( cmd.hasErrors() ) {
+            redirect action: 'index', params: [batchId: cmd.batchId]
+            return
+        }
+
         mappingsSuggestionsGateway.approve(cmd.mappingSuggestionIds)
         redirect action: 'index', params: [batchId: cmd.batchId]
     }
