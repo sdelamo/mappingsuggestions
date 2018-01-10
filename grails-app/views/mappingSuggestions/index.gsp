@@ -4,19 +4,22 @@
     <meta name="layout" content="main" />
 </head>
 <body>
-
-<g:form controller="mappingSuggestions">
+<div class="container">
+<g:form controller="mappingSuggestions" method="POST">
     <g:hiddenField name="batchId" value="${mappingSuggestionResponse.id}"/>
     <table>
         <thead>
         <tr>
-        <tr><th rowspan="2"></th></tr>
-        <th colspan="2">${mappingSuggestionResponse.sourceName}</th>
-        <th colspan="2">${mappingSuggestionResponse.destinationName}</th>
-        <th rowspan="2"><g:message code="mappingsuggestions.score" default="Score"/></th>
-        <th rowspan="2"><g:message code="mappingsuggestions.association" default="Association"/></th>
+        <tr>
+            <th rowspan="2"></th>
+            <th colspan="2" class="align-center">${mappingSuggestionResponse.sourceName}</th>
+            <th colspan="2" class="align-center">${mappingSuggestionResponse.destinationName}</th>
+            <th rowspan="2"><g:message code="mappingsuggestions.score" default="Score"/></th>
+            <th rowspan="2"><g:message code="mappingsuggestions.association" default="Association"/></th>
         </tr>
         <tr>
+            <th><g:message code="mappingsuggestions.id" default="ID"/></th>
+            <th><g:message code="mappingsuggestions.name" default="Name"/></th>
             <th><g:message code="mappingsuggestions.id" default="ID"/></th>
             <th><g:message code="mappingsuggestions.name" default="Name"/></th>
         </tr>
@@ -39,17 +42,21 @@
     <g:actionSubmit value="${g.message(code:'mappingsuggestions.reject', default: 'Reject')}" action="reject" />
 </g:form>
 
-<g:paginate controller="mappingSuggestions"
-            action="index"
-            total="${total}"
-            offset="${offset}"
-            max="${max}"
-/>
+    <div class="pagination">
+        <g:paginate controller="mappingSuggestions"
+                    action="index"
+                    total="${total}"
+                    offset="${offset}"
+                    max="${max}"
+                    params="[batchId: mappingSuggestionResponse.id]"
+        />
+        <g:message code="pagination.legend" args="[offset, offset + max, total]" default="Displaying ${offset}-${offset + max} of ${total}"/>
+    </div>
 
-<g:form controller="mappingSuggestions" action='approveAll'>
+<g:form controller="mappingSuggestions" action='approveAll' method="POST">
     <g:hiddenField name="batchId" value="${mappingSuggestionResponse.id}"/>
     <input type="submit" value="${g.message(code:'mappingsuggestions.approveAll', default: 'Approve All')}" />
 </g:form>
-
+</div>
 </body>
 </html>

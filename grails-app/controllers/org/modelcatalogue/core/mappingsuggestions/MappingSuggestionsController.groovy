@@ -20,7 +20,7 @@ class MappingSuggestionsController implements GrailsConfigurationAware {
 
     @Override
     void setConfiguration(Config co) {
-        defaultMax = co.getProperty('mdx.mappingsuggestions.max', Integer, 10)
+        defaultMax = co.getProperty('mdx.mappingsuggestions.max', Integer, 5)
     }
 
     def index(MappingSuggestionIndexCommand cmd) {

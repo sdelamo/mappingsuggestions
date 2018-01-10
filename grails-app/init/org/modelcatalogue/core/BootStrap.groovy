@@ -19,10 +19,13 @@ class BootStrap {
 
         DataModel cancelHospitalA = dataModelGormService.save('Cancer Hospital A')
         DataModel cancelHospitalB = dataModelGormService.save('Cancer Hospital B')
-        DataElement cancelHospitalAGlucose = dataElementGormService.save('A01', 'Gluscose', cancelHospitalA)
-        DataElement cancelHospitalBGlucose = dataElementGormService.save('B01', 'Glicose', cancelHospitalB)
+        dataElementGormService.save('A01', 'Gluscose', cancelHospitalA)
 
-        GenerateMappingSuggestionsRequestImpl request = new GenerateMappingSuggestionsRequestImpl(sourceId: cancelHospitalA.id, destinationId: cancelHospitalBGlucose.id)
+        ['Glicose', 'Glukos', 'Gluc', 'Glucosa', 'Glucosio', 'Glükos', 'Glikoz', '葡萄糖'].eachWithIndex{ String name, int index ->
+            dataElementGormService.save("B${index}", name, cancelHospitalB)
+        }
+
+        GenerateMappingSuggestionsRequestImpl request = new GenerateMappingSuggestionsRequestImpl(sourceId: cancelHospitalA.id, destinationId: cancelHospitalB.id)
         mappingsSuggestionsGateway.generateMappingSuggestions(request)
 
     }

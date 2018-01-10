@@ -33,16 +33,16 @@ html * {
 }
 
 body {
-    background-color: #F5F5F5;
+    background-color: #FFFFFF;
     color: #333333;
     overflow-x: hidden; /* prevents box-shadow causing a horizontal scrollbar in firefox when viewport < 960px wide */
-    -moz-box-shadow: 0 0 0.3em #424649;
-    -webkit-box-shadow: 0 0 0.3em #424649;
-    box-shadow: 0 0 0.3em #424649;
+    -moz-box-shadow: 0 0 0.3em rgb(245, 245, 245);
+    -webkit-box-shadow: 0 0 0.3em rgb(245, 245, 245);
+    box-shadow: 0 0 0.3em rgb(245, 245, 245);
 }
 
 #grailsLogo {
-    background-color: #feb672;
+    background-color: rgb(35, 82, 124);
 }
 
 a:hover, a:active {
@@ -84,17 +84,18 @@ img {
 }
 
 .footer {
-    background: #424649;
+    border: 1px solid lightgray;
     color: #ffffff;
     clear: both;
     font-size: 0.8em;
     margin-top: 1.5em;
     padding: 1em;
+    margin: 10px;
     min-height: 1em;
 }
 
 .footer a {
-    color: #feb672;
+    color: rgb(35, 82, 124);
 }
 
 .spinner {
@@ -174,7 +175,7 @@ img {
 }
 
 .nav li.dropdown.open ul.dropdown-menu {
-    background-color: #424649;
+    background-color: rgb(245, 245, 245);
 }
 
 /* CREATE/EDIT FORMS AND SHOW PAGES */
@@ -395,17 +396,16 @@ td, th {
 }
 
 th {
-    background-color: #efefef;
-    background-image: -moz-linear-gradient(top, #ffffff, #eaeaea);
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffffff), color-stop(1, #eaeaea));
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr = '#ffffff', EndColorStr = '#eaeaea');
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffffff', EndColorStr='#eaeaea')";
-    color: #666666;
+    color: rgb(51, 51, 51);
     font-weight: bold;
     line-height: 1.7em;
     padding: 0.2em 0.6em;
 }
 
+thead {
+    border-bottom: 3px solid lightgray;
+
+}
 thead th {
     white-space: nowrap;
 }
@@ -445,9 +445,6 @@ th.desc a {
     background: #ffffff;
 }
 
-th:hover, tr:hover {
-    background: #feb672;
-}
 
 /* PAGINATION */
 
@@ -572,3 +569,28 @@ img.grails-logo {
     height:340px;
     margin-top:-10px;
 }
+
+.align-center {
+    text-align: center;
+}
+
+/**
+ * SPONSORS
+ */
+.sponors {
+    overflow: auto;
+    color: rgb(94, 94, 94);
+}
+.sponsor {
+    float: left;
+    text-align: center;
+    width: 25%;
+}
+.sponsor img {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+/**
+ * END SPONSORS
+ */
