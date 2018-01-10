@@ -18,28 +18,36 @@ class MappingSuggestionRejectCommandConstraintsSpec extends Specification {
         cmd = null
     }
 
-    void 'actionIds cannot be null'() {
+    void 'mappingSuggestionIds cannot be null'() {
         when:
-        cmd.actionIds = null
+        cmd.mappingSuggestionIds = null
 
         then:
-        !cmd.validate(['actionIds'])
-        cmd.errors['actionIds'].code == 'nullable'
+        !cmd.validate(['mappingSuggestionIds'])
+        cmd.errors['mappingSuggestionIds'].code == 'nullable'
     }
 
-    void 'actionIds cannot be an empty list'() {
+    void 'mappingSuggestionIds cannot be an empty list'() {
         when:
-        cmd.actionIds = [1]
+        cmd.mappingSuggestionIds = [1]
 
         then:
-        cmd.validate(['actionIds'])
+        cmd.validate(['mappingSuggestionIds'])
 
         when:
-        cmd.actionIds = []
+        cmd.mappingSuggestionIds = []
 
         then:
-        !cmd.validate(['actionIds'])
-        cmd.errors['actionIds'].code == 'minSize.notmet'
+        !cmd.validate(['mappingSuggestionIds'])
+        cmd.errors['mappingSuggestionIds'].code == 'minSize.notmet'
+    }
 
+    void 'batchId cannot be null'() {
+        when:
+        cmd.batchId = null
+
+        then:
+        !cmd.validate(['batchId'])
+        cmd.errors['batchId'].code == 'nullable'
     }
 }

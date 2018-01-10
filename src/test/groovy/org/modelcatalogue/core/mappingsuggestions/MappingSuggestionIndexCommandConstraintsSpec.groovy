@@ -23,7 +23,7 @@ class MappingSuggestionIndexCommandConstraintsSpec extends Specification {
         cmd.batchId = null
 
         then:
-        cmd.validate(['batchId'])
+        !cmd.validate(['batchId'])
     }
 
     void 'status can be null'() {

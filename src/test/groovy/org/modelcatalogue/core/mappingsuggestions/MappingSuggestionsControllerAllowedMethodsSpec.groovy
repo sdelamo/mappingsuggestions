@@ -28,7 +28,7 @@ class MappingSuggestionsControllerAllowedMethodsSpec extends Specification
         controller.index()
 
         then:
-        response.status == SC_OK
+        response.status == 422
     }
 
     @Unroll
@@ -50,7 +50,7 @@ class MappingSuggestionsControllerAllowedMethodsSpec extends Specification
         controller.reject()
 
         then:
-        response.status == SC_OK
+        response.status == 302
     }
 
     @Unroll
@@ -72,7 +72,7 @@ class MappingSuggestionsControllerAllowedMethodsSpec extends Specification
         controller.approve()
 
         then:
-        response.status == SC_OK
+        response.status == 302
     }
 
     @Unroll
@@ -94,7 +94,7 @@ class MappingSuggestionsControllerAllowedMethodsSpec extends Specification
         controller.approveAll()
 
         then:
-        response.status == SC_OK
+        response.status == 302
     }
 
 }
