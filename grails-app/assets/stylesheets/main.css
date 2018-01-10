@@ -594,3 +594,19 @@ img.grails-logo {
 /**
  * END SPONSORS
  */
+
+form ol.filter li {
+    list-style-type: none;
+    float: left;
+    margin-right: 20px;
+}
+form ol.filter {
+    overflow: auto;
+    border: 1px solid lightgray;
+    padding: 5px;
+    margin: 5px;
+}
+
+form {
+    clear: both;
+}

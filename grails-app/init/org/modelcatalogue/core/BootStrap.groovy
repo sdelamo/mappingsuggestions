@@ -20,8 +20,15 @@ class BootStrap {
         DataModel cancelHospitalA = dataModelGormService.save('Cancer Hospital A')
         DataModel cancelHospitalB = dataModelGormService.save('Cancer Hospital B')
         dataElementGormService.save('A01', 'Gluscose', cancelHospitalA)
+        dataElementGormService.save('A02', 'Blood pressure', cancelHospitalA)
+        dataElementGormService.save('A03', 'Body mass', cancelHospitalA)
 
-        ['Glicose', 'Glukos', 'Gluc', 'Glucosa', 'Glucosio', 'Glükos', 'Glikoz', '葡萄糖'].eachWithIndex{ String name, int index ->
+        List<List<String>> examples = [
+                ['Glicose', 'Glukos', 'Gluc', 'Glucosa', 'Glucosio', 'Glükos', 'Glikoz', '葡萄糖'],
+                ['Pressione Sanguigna', 'Presión Sanguínea', 'Blodtryk', 'Blutdrukc'],
+        ]
+        List<String> l = examples.flatten() as List<String>
+        l.eachWithIndex { String name, int index ->
             dataElementGormService.save("B${index}", name, cancelHospitalB)
         }
 

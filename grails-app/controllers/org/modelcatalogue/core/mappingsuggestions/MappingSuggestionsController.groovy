@@ -15,12 +15,14 @@ class MappingSuggestionsController implements GrailsConfigurationAware {
     ]
 
     Integer defaultMax
+    Integer defaultScore
 
     MappingsSuggestionsGateway mappingsSuggestionsGateway
 
     @Override
     void setConfiguration(Config co) {
-        defaultMax = co.getProperty('mdx.mappingsuggestions.max', Integer, 5)
+        defaultMax = co.getProperty('mdx.mappingsuggestions.max', Integer, 20)
+        defaultScore = co.getProperty('mdx.mappingsuggestions.score', Integer, 20)
     }
 
     def index(MappingSuggestionIndexCommand cmd) {
@@ -32,17 +34,23 @@ class MappingSuggestionsController implements GrailsConfigurationAware {
                 batchId: cmd.batchId,
                 max: cmd.max ?: defaultMax,
                 offset: cmd.offset ?: 0,
+                scorePercentage: cmd.score ?: defaultScore,
                 statusList: (cmd.status ?: MappingSuggestionStatusUtils.possibleValues()).collect {
                     MappingSuggestionStatusUtils.of(it)
-                }
+                },
+                term: cmd.term
         )
         MappingSuggestionResponse rsp = mappingsSuggestionsGateway.findAll(mappingSuggestionRequest)
         Integer total = mappingsSuggestionsGateway.count(mappingSuggestionRequest)
         [
+                score: mappingSuggestionRequest.scorePercentage,
+                statusList: mappingSuggestionRequest.statusList.collect { it.name() },
                 total: total,
                 max: mappingSuggestionRequest.max,
                 offset: mappingSuggestionRequest.offset,
-                mappingSuggestionResponse: rsp,]
+                mappingSuggestionResponse: rsp,
+                term: mappingSuggestionRequest.term,
+        ]
     }
 
     def reject(MappingSuggestionRejectCommand cmd) {

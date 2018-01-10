@@ -5,5 +5,7 @@ import groovy.transform.CompileStatic
 @CompileStatic
 interface MappingSuggestionCountRequest {
     Long getBatchId()
-    List<String> getStatusList()
+    List<MappingSuggestionStatus> getStatusList()
+    Integer getScorePercentage()
+    String getTerm()
 }

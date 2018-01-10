@@ -8,4 +8,6 @@ class MappingSuggestionRequestImpl implements MappingSuggestionRequest, MappingS
     List<MappingSuggestionStatus> statusList
     Integer max
     Integer offset
+    Integer scorePercentage
+    String term
 }

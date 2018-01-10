@@ -8,6 +8,7 @@ import groovy.util.logging.Slf4j
 import org.modelcatalogue.core.mappingsuggestions.MappingSuggestionCountRequest
 import org.modelcatalogue.core.mappingsuggestions.MappingSuggestionRequest
 import org.modelcatalogue.core.mappingsuggestions.MappingSuggestionStatus
+import org.modelcatalogue.core.mappingsuggestions.MappingSuggestionType
 import org.springframework.context.MessageSource
 
 @Slf4j
@@ -19,16 +20,30 @@ class MappingSuggestionsGormService implements WarnGormErrors {
     @Transactional
     @ReadOnly
     List<MappingSuggestionsGormEntity> findAll(MappingSuggestionRequest req) {
-        MappingSuggestionsGormEntity.where {
-            batch.id == req.batchId && status in req.statusList
-        }.max(req.max).offset(req.offset).list()
+        DetachedCriteria<MappingSuggestionsGormEntity> query = buildQuery(req.batchId, req.statusList, req.scorePercentage, req.term)
+        query.max(req.max).offset(req.offset).list()
+    }
+
+    private DetachedCriteria<MappingSuggestionsGormEntity> buildQuery(Long batchId,
+                                                                      List<MappingSuggestionStatus> statusList,
+                                                                      Integer scorePercentage,
+                                                                      String term) {
+        DetachedCriteria<MappingSuggestionsGormEntity> query = MappingSuggestionsGormEntity.where {
+            batch.id == batchId && status in statusList && result >= (scorePercentage / 100.0)
+        }
+        if ( term ) {
+            query = query.where {
+                sourceName =~ '%'+term+'%' || sourceCode =~ '%'+term+'%' || destinationName =~ '%'+term+'%' || destinationCode =~ '%'+term+'%'
+            }
+
+        }
+        query
     }
 
     @ReadOnly
     Integer count(MappingSuggestionCountRequest req) {
-        MappingSuggestionsGormEntity.where {
-            batch.id == req.batchId && status in req.statusList
-        }.count() as Integer
+        DetachedCriteria<MappingSuggestionsGormEntity> query = buildQuery(req.batchId, req.statusList, req.scorePercentage, req.term)
+        query.count() as Integer
     }
 
     @Transactional

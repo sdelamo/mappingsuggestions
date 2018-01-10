@@ -8,8 +8,12 @@ import org.modelcatalogue.core.mappingsuggestions.MappingSuggestionType
 class MappingSuggestionsGormEntity {
     Long sourceId
     MappingSuggestionType sourceType
+    String sourceName
+    String sourceCode
     Long destinationId
     MappingSuggestionType destinationType
+    String destinationName
+    String destinationCode
     float result
     MappingSuggestionStatus status
 

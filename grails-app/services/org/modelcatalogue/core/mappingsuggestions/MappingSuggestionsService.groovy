@@ -115,6 +115,10 @@ class MappingSuggestionsService implements MappingsSuggestionsGateway, WarnGormE
     MappingSuggestionsGormEntity generateMappingSuggestion(DataElement source, DataElement destination) {
         new MappingSuggestionsGormEntity(sourceId: source.id,
         sourceType: MappingSuggestionType.DATA_ELEMENT,
+        sourceCode: source.modelCatalogueId,
+        sourceName: source.name,
+        destinationCode: destination.modelCatalogueId,
+        destinationName: destination.name,
         destinationId: destination.id,
         destinationType: MappingSuggestionType.DATA_ELEMENT,
         result: distanceBetweenDataElements(source, destination),
