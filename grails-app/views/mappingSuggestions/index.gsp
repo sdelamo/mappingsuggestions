@@ -79,7 +79,7 @@
                     max="${max}"
                     params="[batchId: mappingSuggestionResponse.id]"
         />
-        <g:message code="pagination.legend" args="[offset, offset + max, total]" default="Displaying ${offset}-${offset + max} of ${total}"/>
+        <g:message code="pagination.legend" args="[offset, Math.min(offset + max, total), total]" default="Displaying ${offset}-${Math.min(offset + max, total)} of ${total}"/>
     </div>
 
 <g:form controller="mappingSuggestions" action='approveAll' method="POST">
