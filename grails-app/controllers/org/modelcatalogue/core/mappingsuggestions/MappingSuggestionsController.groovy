@@ -3,6 +3,10 @@ package org.modelcatalogue.core.mappingsuggestions
 import grails.config.Config
 import grails.core.support.GrailsConfigurationAware
 import groovy.transform.CompileStatic
+import org.modelcatalogue.core.mappingsuggestions.view.MappingSuggestionsFilter
+import org.modelcatalogue.core.mappingsuggestions.view.MappingSuggestionsFilterImpl
+import org.modelcatalogue.core.view.PaginationViewModel
+import org.modelcatalogue.core.view.PaginationViewModelImpl
 
 @CompileStatic
 class MappingSuggestionsController implements GrailsConfigurationAware {
@@ -42,14 +46,20 @@ class MappingSuggestionsController implements GrailsConfigurationAware {
         )
         MappingSuggestionResponse rsp = mappingsSuggestionsGateway.findAll(mappingSuggestionRequest)
         Integer total = mappingsSuggestionsGateway.count(mappingSuggestionRequest)
-        [
-                score: mappingSuggestionRequest.scorePercentage,
+        MappingSuggestionsFilter mappingSuggestionsFilter = new MappingSuggestionsFilterImpl(score: mappingSuggestionRequest.scorePercentage,
                 statusList: mappingSuggestionRequest.statusList.collect { it.name() },
-                total: total,
-                max: mappingSuggestionRequest.max,
-                offset: mappingSuggestionRequest.offset,
-                mappingSuggestionResponse: rsp,
                 term: mappingSuggestionRequest.term,
+                max: mappingSuggestionRequest.max)
+        PaginationViewModel pagination = new PaginationViewModelImpl(total: total,
+                max: mappingSuggestionRequest.max,
+                offset: mappingSuggestionRequest.offset)
+        [
+                pagination: pagination,
+                filter: mappingSuggestionsFilter,
+                mappingSuggestionList: rsp.mappingSuggestionList,
+                sourceName: rsp.sourceName,
+                destinationName: rsp.destinationName,
+                batchId: cmd.batchId
         ]
     }
 
